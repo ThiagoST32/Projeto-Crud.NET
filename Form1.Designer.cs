@@ -37,6 +37,10 @@
             textEmail = new TextBox();
             textTelefone = new TextBox();
             textSenha = new TextBox();
+            ListViewBuscarDados = new ListView();
+            BuscarDadosLabel = new Label();
+            textBuscarDados = new TextBox();
+            BtnBuscarDados = new Button();
             SuspendLayout();
             // 
             // Salvar
@@ -117,11 +121,49 @@
             textSenha.Size = new Size(117, 23);
             textSenha.TabIndex = 8;
             // 
+            // ListViewBuscarDados
+            // 
+            ListViewBuscarDados.Location = new Point(148, 59);
+            ListViewBuscarDados.Name = "ListViewBuscarDados";
+            ListViewBuscarDados.Size = new Size(325, 129);
+            ListViewBuscarDados.TabIndex = 9;
+            ListViewBuscarDados.UseCompatibleStateImageBehavior = false;
+            // 
+            // BuscarDadosLabel
+            // 
+            BuscarDadosLabel.AutoSize = true;
+            BuscarDadosLabel.Location = new Point(148, 9);
+            BuscarDadosLabel.Name = "BuscarDadosLabel";
+            BuscarDadosLabel.Size = new Size(42, 15);
+            BuscarDadosLabel.TabIndex = 10;
+            BuscarDadosLabel.Text = "Buscar";
+            BuscarDadosLabel.Click += label1_Click_1;
+            // 
+            // textBuscarDados
+            // 
+            textBuscarDados.Location = new Point(148, 30);
+            textBuscarDados.Name = "textBuscarDados";
+            textBuscarDados.Size = new Size(199, 23);
+            textBuscarDados.TabIndex = 11;
+            // 
+            // BtnBuscarDados
+            // 
+            BtnBuscarDados.Location = new Point(352, 30);
+            BtnBuscarDados.Name = "BtnBuscarDados";
+            BtnBuscarDados.Size = new Size(75, 23);
+            BtnBuscarDados.TabIndex = 0;
+            BtnBuscarDados.Text = "Buscar";
+            BtnBuscarDados.Click += BtnBuscarDados_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(175, 249);
+            ClientSize = new Size(644, 231);
+            Controls.Add(BtnBuscarDados);
+            Controls.Add(textBuscarDados);
+            Controls.Add(BuscarDadosLabel);
+            Controls.Add(ListViewBuscarDados);
             Controls.Add(textSenha);
             Controls.Add(textTelefone);
             Controls.Add(textEmail);
@@ -131,8 +173,10 @@
             Controls.Add(Nome);
             Controls.Add(textNome);
             Controls.Add(Salvar);
+            Location = new Point(50, 50);
             Name = "Form1";
             Text = "Form1";
+            Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -148,5 +192,9 @@
         private TextBox textEmail;
         private TextBox textTelefone;
         private TextBox textSenha;
+        private ListView ListViewBuscarDados;
+        private Label BuscarDadosLabel;
+        private TextBox textBuscarDados;
+        private Button BtnBuscarDados;
     }
 }

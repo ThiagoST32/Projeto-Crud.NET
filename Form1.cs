@@ -40,9 +40,29 @@ namespace Crud_Adm_Root_C_
             try
             {
 
-
                 //Criar conexão Mysql
                 conn = new MySqlConnection(data_source);
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Connection = conn;
+
+                cmd.CommandText = "INSERT INTO Cadastro_teste (nome, telefone, email, senha) VALUES (@nome,@telefone, @email, @senha)";
+
+                cmd.Parameters.AddWithValue("@nome", textNome.Text);
+                cmd.Parameters.AddWithValue("@telefone", textTelefone.Text);
+                cmd.Parameters.AddWithValue("@email", textEmail.Text);
+                cmd.Parameters.AddWithValue("@senha", textSenha.Text);
+                cmd.ExecuteNonQuery();
+
+                cmd.Prepare();
+
+                MessageBox.Show("Deu tudo certo Inserido!!!");
+
+                conn.Close();
+                //Criar conexão Mysql
+                /*conn = new MySqlConnection(data_source);
 
                 string sql = "INSERT INTO Cadastro_teste (nome, telefone, email, senha) VALUES ('" + textNome.Text + "','" + textTelefone.Text + "','" + textEmail.Text + "','" + textSenha.Text + "')";
 
@@ -54,15 +74,15 @@ namespace Crud_Adm_Root_C_
 
                 comando.ExecuteReader();
 
-                MessageBox.Show("Deu tudo certo Inserido!!!");
+                MessageBox.Show("Deu tudo certo Inserido!!!");*/
 
 
 
 
             }
-            catch (Exception ex)
+            catch (MySqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("ERRO " + ex.Message);
             }
             finally
             {

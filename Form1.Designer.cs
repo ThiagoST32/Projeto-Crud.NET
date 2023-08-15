@@ -125,7 +125,7 @@
             // 
             ListViewBuscarDados.Location = new Point(148, 59);
             ListViewBuscarDados.Name = "ListViewBuscarDados";
-            ListViewBuscarDados.Size = new Size(325, 129);
+            ListViewBuscarDados.Size = new Size(430, 274);
             ListViewBuscarDados.TabIndex = 9;
             ListViewBuscarDados.UseCompatibleStateImageBehavior = false;
             // 
@@ -143,12 +143,12 @@
             // 
             textBuscarDados.Location = new Point(148, 30);
             textBuscarDados.Name = "textBuscarDados";
-            textBuscarDados.Size = new Size(199, 23);
+            textBuscarDados.Size = new Size(349, 23);
             textBuscarDados.TabIndex = 11;
             // 
             // BtnBuscarDados
             // 
-            BtnBuscarDados.Location = new Point(352, 30);
+            BtnBuscarDados.Location = new Point(503, 30);
             BtnBuscarDados.Name = "BtnBuscarDados";
             BtnBuscarDados.Size = new Size(75, 23);
             BtnBuscarDados.TabIndex = 0;
@@ -159,7 +159,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(644, 231);
+            ClientSize = new Size(590, 359);
             Controls.Add(BtnBuscarDados);
             Controls.Add(textBuscarDados);
             Controls.Add(BuscarDadosLabel);

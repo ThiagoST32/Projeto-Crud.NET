@@ -23,6 +23,8 @@ namespace Crud_Adm_Root_C_
             ListViewBuscarDados.Columns.Add("Telefone", 75, HorizontalAlignment.Left);
             ListViewBuscarDados.Columns.Add("Email", 75, HorizontalAlignment.Left);
             ListViewBuscarDados.Columns.Add("Senha", 75, HorizontalAlignment.Left);
+
+            carregarContatos();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -60,23 +62,14 @@ namespace Crud_Adm_Root_C_
 
                 MessageBox.Show("Deu tudo certo Inserido!!!");
 
+                textNome.Text = string.Empty;
+                textEmail.Text = string.Empty;
+                textTelefone.Text = string.Empty;
+                textSenha.Text = string.Empty;
+
+                carregarContatos();
+
                 conn.Close();
-                //Criar conexão Mysql
-                /*conn = new MySqlConnection(data_source);
-
-                string sql = "INSERT INTO Cadastro_teste (nome, telefone, email, senha) VALUES ('" + textNome.Text + "','" + textTelefone.Text + "','" + textEmail.Text + "','" + textSenha.Text + "')";
-
-
-                //Executar Conexão
-                MySqlCommand comando = new MySqlCommand(sql, conn);
-
-                conn.Open();
-
-                comando.ExecuteReader();
-
-                MessageBox.Show("Deu tudo certo Inserido!!!");*/
-
-
 
 
             }
@@ -110,6 +103,20 @@ namespace Crud_Adm_Root_C_
             try
             {
                 conn = new MySqlConnection(data_source);
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Connection = conn;
+
+                cmd.CommandText = "SELECT * FROM Cadastro_teste WHERE nome LIKE @SelectBusca OR email LIKE @SelectBusca";
+
+                cmd.Parameters.AddWithValue("@SelectBusca", "'%" + textBuscarDados.Text + "%'");
+
+                cmd.Prepare();
+
+                conn.Close();
+
 
                 string buscar = "'%" + textBuscarDados.Text + "%'";
 
@@ -135,17 +142,88 @@ namespace Crud_Adm_Root_C_
                         readder.GetString(4),
                     };
 
-                    var linha_list_view = new ListViewItem(row);
 
-                    ListViewBuscarDados.Items.Add(linha_list_view);
+                    ListViewBuscarDados.Items.Add(new ListViewItem(row));
                 }
 
 
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("ERRO " + ex.Number + " ocorreu " + ex.Message,
+                    "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Ocorreu " + ex.Message,
+                    "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void carregarContatos()
+        {
+            try
+            {
+                conn = new MySqlConnection(data_source);
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Connection = conn;
+
+                cmd.CommandText = "SELECT * FROM Cadastro_teste ORDER BY idCadastro_teste";
+
+                cmd.Prepare();
+
+                conn.Close();
+
+
+                string buscar = "'%" + textBuscarDados.Text + "%'";
+
+                string buscarDados = "SELECT * FROM Cadastro_teste WHERE nome LIKE " + buscar + "";
+
+                MySqlCommand comando = new MySqlCommand(buscarDados, conn);
+
+                conn.Open();
+
+                MySqlDataReader readder = comando.ExecuteReader();
+
+                ListViewBuscarDados.Items.Clear();
+
+                while (readder.Read())
+                {
+
+                    string[] row =
+                    {
+                        readder.GetString(0),
+                        readder.GetString(1),
+                        readder.GetString(2),
+                        readder.GetString(3),
+                        readder.GetString(4),
+                    };
+
+
+                    ListViewBuscarDados.Items.Add(new ListViewItem(row));
+                }
+
+
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("ERRO " + ex.Number + " ocorreu " + ex.Message,
+                    "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocorreu " + ex.Message,
+                    "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
             finally

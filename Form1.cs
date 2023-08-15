@@ -5,7 +5,10 @@ namespace Crud_Adm_Root_C_
     public partial class Form1 : Form
     {
         private MySqlConnection conn;
+
         private string data_source = "datasource=localhost;username=root;password=Bnas123!@#;database=NET;";
+
+        private int? id_contato_selecionado = null;
 
         public Form1()
         {
@@ -84,11 +87,6 @@ namespace Crud_Adm_Root_C_
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void domainUpDown1_SelectedItemChanged(object sender, EventArgs e)
         {
 
         }
@@ -213,6 +211,132 @@ namespace Crud_Adm_Root_C_
                 }
 
 
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("ERRO " + ex.Number + " ocorreu " + ex.Message,
+                    "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocorreu " + ex.Message,
+                    "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void lst_contatos_ItemChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            ListView.SelectedListViewItemCollection itens_selecionados = ListViewBuscarDados.SelectedItems;
+
+            foreach (ListViewItem item in itens_selecionados)
+            {
+                id_contato_selecionado = Convert.ToInt32(item.SubItems[0].Text);
+
+                textNome.Text = item.SubItems[1].Text;
+                textTelefone.Text = item.SubItems[2].Text;
+                textEmail.Text = item.SubItems[3].Text;
+                textSenha.Text = item.SubItems[4].Text;
+            }
+        }
+
+        private void AtualizarBtn_Click(object sender, EventArgs e)
+        {
+
+            conn = new MySqlConnection(data_source);
+            conn.Open();
+
+            MySqlCommand cmd = new MySqlCommand();
+            try
+            {
+                conn = new MySqlConnection(data_source);
+                conn.Open();
+
+                if (id_contato_selecionado == null)
+                {
+                    //Insert
+                    MessageBox.Show("Não foi possivel Atualizar selecione algum usuario!!!");
+                }
+                else
+                {
+                    //Update
+                    cmd.Connection = conn;
+
+                    cmd.CommandText = "UPDATE Cadastro_teste SET nome = @nome, telefone = @telefone, email = @email, senha = @senha WHERE idCadastro_teste = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id_contato_selecionado);
+                    cmd.Parameters.AddWithValue("@nome", textNome.Text);
+                    cmd.Parameters.AddWithValue("@telefone", textTelefone.Text);
+                    cmd.Parameters.AddWithValue("@email", textEmail.Text);
+                    cmd.Parameters.AddWithValue("@senha", textSenha.Text);
+                    cmd.ExecuteNonQuery();
+
+                    cmd.Prepare();
+
+                    MessageBox.Show("Deu tudo certo, Atualizado!!!", "Sucesso!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    textNome.Text = string.Empty;
+                    textEmail.Text = string.Empty;
+                    textTelefone.Text = string.Empty;
+                    textSenha.Text = string.Empty;
+
+                    carregarContatos();
+                }
+
+
+
+
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("ERRO " + ex.Number + " ocorreu " + ex.Message,
+                    "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocorreu " + ex.Message,
+                    "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void ExcluirBtn_Click(object sender, EventArgs e)
+        {
+            conn = new MySqlConnection(data_source);
+            conn.Open();
+
+            MySqlCommand cmd = new MySqlCommand();
+
+            try
+            {
+                cmd.Connection = conn;
+
+                cmd.CommandText = "DELETE FROM Cadastro_teste WHERE idCadastro_teste = @id;";
+
+                cmd.Parameters.AddWithValue("@id", id_contato_selecionado);
+
+                cmd.ExecuteNonQuery();
+
+                cmd.Prepare();
+
+                MessageBox.Show("Deu tudo certo, Excluido com Sucesso!!!", "Sucesso!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                textNome.Text = string.Empty;
+                textEmail.Text = string.Empty;
+                textTelefone.Text = string.Empty;
+                textSenha.Text = string.Empty;
+
+                carregarContatos();
             }
             catch (MySqlException ex)
             {

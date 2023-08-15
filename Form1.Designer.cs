@@ -41,11 +41,13 @@
             BuscarDadosLabel = new Label();
             textBuscarDados = new TextBox();
             BtnBuscarDados = new Button();
+            AtualizarBtn = new Button();
+            ExcluirBtn = new Button();
             SuspendLayout();
             // 
             // Salvar
             // 
-            Salvar.Location = new Point(49, 194);
+            Salvar.Location = new Point(67, 194);
             Salvar.Name = "Salvar";
             Salvar.RightToLeft = RightToLeft.No;
             Salvar.Size = new Size(75, 23);
@@ -124,10 +126,12 @@
             // ListViewBuscarDados
             // 
             ListViewBuscarDados.Location = new Point(148, 59);
+            ListViewBuscarDados.MultiSelect = false;
             ListViewBuscarDados.Name = "ListViewBuscarDados";
             ListViewBuscarDados.Size = new Size(430, 274);
             ListViewBuscarDados.TabIndex = 9;
             ListViewBuscarDados.UseCompatibleStateImageBehavior = false;
+            ListViewBuscarDados.ItemSelectionChanged += lst_contatos_ItemChanged;
             // 
             // BuscarDadosLabel
             // 
@@ -155,11 +159,33 @@
             BtnBuscarDados.Text = "Buscar";
             BtnBuscarDados.Click += BtnBuscarDados_Click;
             // 
+            // AtualizarBtn
+            // 
+            AtualizarBtn.Location = new Point(67, 223);
+            AtualizarBtn.Name = "AtualizarBtn";
+            AtualizarBtn.Size = new Size(75, 23);
+            AtualizarBtn.TabIndex = 12;
+            AtualizarBtn.Text = "Atualizar";
+            AtualizarBtn.UseVisualStyleBackColor = true;
+            AtualizarBtn.Click += AtualizarBtn_Click;
+            // 
+            // ExcluirBtn
+            // 
+            ExcluirBtn.Location = new Point(67, 252);
+            ExcluirBtn.Name = "ExcluirBtn";
+            ExcluirBtn.Size = new Size(75, 23);
+            ExcluirBtn.TabIndex = 13;
+            ExcluirBtn.Text = "Excluir";
+            ExcluirBtn.UseVisualStyleBackColor = true;
+            ExcluirBtn.Click += ExcluirBtn_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(590, 359);
+            Controls.Add(ExcluirBtn);
+            Controls.Add(AtualizarBtn);
             Controls.Add(BtnBuscarDados);
             Controls.Add(textBuscarDados);
             Controls.Add(BuscarDadosLabel);
@@ -196,5 +222,7 @@
         private Label BuscarDadosLabel;
         private TextBox textBuscarDados;
         private Button BtnBuscarDados;
+        private Button AtualizarBtn;
+        private Button ExcluirBtn;
     }
 }
